@@ -10,11 +10,11 @@ const handleOnFailError = () => {
   throw error;
 };
 
-const handleError = () => {
+const handleError = (err, res) => {
   if (err.name === "ValidationError" || err.name === "CastError") {
     res
       .status(ERROR_CODES.BadRequest)
-      .send({ message: "Bad Request, invalid input" });
+      .send({ message: "Bad request, invalid input" });
 
     return;
   }
@@ -23,7 +23,7 @@ const handleError = () => {
   } else {
     res
       .status(ERROR_CODES.DefaultError)
-      .send({ message: "Something went wrong" });
+      .send({ message: "An error has occurred on the server" });
   }
 };
 

@@ -1,4 +1,4 @@
-const clothingItem = require("../models/clothingItem");
+const ClothingItem = require("../models/clothingItem");
 const { handleOnFailError, handleError } = require("../utils/errors");
 
 const createClothingItem = (req, res) => {
@@ -6,23 +6,22 @@ const createClothingItem = (req, res) => {
   const { name, weather, imageUrl } = req.body;
   const createdAt = Date.now();
 
-  clothingItem
-    .create({
-      name,
-      weather,
-      imageUrl,
-      owner,
-      createdAt,
-    })
+  ClothingItem.create({
+    name,
+    weather,
+    imageUrl,
+    owner,
+    createdAt,
+  })
     .then((item) => res.status(200).send({ data: item }))
     .catch((err) => {
+      console.log(err.message);
       handleError(err, res);
     });
 };
 
 const getClothingItems = (req, res) => {
-  clothingItem
-    .find({})
+  ClothingItem.find({})
     .then((items) => res.status(200).send({ items }))
     .catch((err) => {
       handleError(err, res);
@@ -33,8 +32,7 @@ const updateItem = (req, res) => {
   const { itemId } = req.params;
   const { imageUrl } = req.body;
 
-  clothingItem
-    .findByIdAndUpdate(itemId, { $set: { imageUrl } })
+  ClothingItem.findByIdAndUpdate(itemId, { $set: { imageUrl } })
     .orFail(() => {
       handleOnFailError();
     })
@@ -45,12 +43,13 @@ const updateItem = (req, res) => {
 };
 
 const likeItem = (req, res) => {
-  clothingItem
-    .findByIdAndUpdate(
-      req.params.itemId,
-      { $addToSet: { likes: req.user._id } },
-      { new: true }
-    )
+  const { itemId } = req.params;
+
+  ClothingItem.findByIdAndUpdate(
+    itemId,
+    { $addToSet: { likes: req.user._id } },
+    { new: true }
+  )
     .orFail(() => {
       handleOnFailError();
     })
@@ -61,12 +60,13 @@ const likeItem = (req, res) => {
 };
 
 const dislikeItem = (req, res) => {
-  clothingItem
-    .findByIdAndUpdate(
-      req.params.itemId,
-      { $pull: { likes: req.user._id } },
-      { new: true }
-    )
+  const { itemId } = req.params;
+
+  ClothingItem.findByIdAndUpdate(
+    itemId,
+    { $pull: { likes: req.user._id } },
+    { new: true }
+  )
     .orFail(() => {
       handleOnFailError();
     })
@@ -79,8 +79,7 @@ const dislikeItem = (req, res) => {
 const deleteItem = (req, res) => {
   const { itemId } = req.params;
 
-  clothingItem
-    .findByIdAndDelete(itemId)
+  ClothingItem.findByIdAndRemove(itemId)
     .orFail(() => {
       handleOnFailError();
     })
