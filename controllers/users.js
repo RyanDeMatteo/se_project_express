@@ -5,7 +5,7 @@ const createUser = (req, res) => {
   const { name, avatar } = req.body;
 
   User.create({ name, avatar })
-    .then((item) => res.status(200).send({ data: item }))
+    .then((item) => res.send({ data: item }))
     .catch((err) => {
       handleError(err, res);
     });
@@ -13,7 +13,7 @@ const createUser = (req, res) => {
 
 const getUsers = (req, res) => {
   User.find({})
-    .then((users) => res.status(200).send(users))
+    .then((users) => res.send(users))
     .catch((err) => {
       handleError(err, res);
     });
@@ -24,7 +24,7 @@ const getUser = (req, res) => {
 
   User.findById(_id)
     .orFail(handleOnFailError)
-    .then((data) => res.status(200).send(data))
+    .then((data) => res.send(data))
     .catch((err) => {
       handleError(err, res);
     });
@@ -36,7 +36,7 @@ const updateUser = (req, res) => {
 
   User.findByIdAndUpdate(_id, { $set: { name, avatar } })
     .orFail(handleOnFailError)
-    .then((user) => res.status(200).send({ data: user }))
+    .then((user) => res.send({ data: user }))
     .catch((err) => {
       handleError(err, res);
     });

@@ -22,7 +22,7 @@ const createClothingItem = (req, res) => {
 
 const getClothingItems = (req, res) => {
   ClothingItem.find({})
-    .then((items) => res.status(200).send({ items }))
+    .then((items) => res.send({ items }))
     .catch((err) => {
       handleError(err, res);
     });
@@ -36,7 +36,7 @@ const updateItem = (req, res) => {
     .orFail(() => {
       handleOnFailError();
     })
-    .then((item) => res.status(200).send({ data: item }))
+    .then((item) => res.send({ data: item }))
     .catch((err) => {
       handleError(err, res);
     });
@@ -53,7 +53,7 @@ const likeItem = (req, res) => {
     .orFail(() => {
       handleOnFailError();
     })
-    .then((item) => res.status(200).send({ data: item }))
+    .then((item) => res.send({ data: item }))
     .catch((err) => {
       handleError(err, res);
     });
@@ -70,7 +70,7 @@ const dislikeItem = (req, res) => {
     .orFail(() => {
       handleOnFailError();
     })
-    .then((item) => res.status(200).send({ data: item }))
+    .then((item) => res.send({ data: item }))
     .catch((err) => {
       handleError(err, res);
     });
@@ -83,7 +83,7 @@ const deleteItem = (req, res) => {
     .orFail(() => {
       handleOnFailError();
     })
-    .then(() => res.status(200).send({}))
+    .then(() => res.send({ message: "Item deleted" }))
     .catch((err) => {
       handleError(err, res);
     });
