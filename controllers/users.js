@@ -2,9 +2,9 @@ const User = require("../models/user");
 const { handleOnFailError, handleError } = require("../utils/errors");
 
 const createUser = (req, res) => {
-  const { name, avatar } = req.body;
+  const { name, avatar, password } = req.body;
 
-  User.create({ name, avatar })
+  User.create({ name, avatar, password })
     .then((item) => res.send({ data: item }))
     .catch((err) => {
       handleError(err, res);
@@ -32,9 +32,9 @@ const getUser = (req, res) => {
 
 const updateUser = (req, res) => {
   const { _id } = req.params;
-  const { name, avatar } = req.body;
+  const { name, avatar, password } = req.body;
 
-  User.findByIdAndUpdate(_id, { $set: { name, avatar } })
+  User.findByIdAndUpdate(_id, { $set: { name, avatar, password } })
     .orFail(handleOnFailError)
     .then((user) => res.send({ data: user }))
     .catch((err) => {

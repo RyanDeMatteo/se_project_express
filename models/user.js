@@ -7,6 +7,7 @@ const user = new mongoose.Schema({
     required: true,
     minlength: 2,
     maxlength: 30,
+    default: "Elise Bouer",
   },
   avatar: {
     type: String,
@@ -17,6 +18,25 @@ const user = new mongoose.Schema({
       },
       message: "You must enter a valid URL",
     },
+    default:
+      "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Elise.png",
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    validate: {
+      validator(v) {
+        return validator.isEmail(v);
+      },
+      message: "This email is not valid",
+    },
+  },
+  password: {
+    type: String,
+    required: true,
+    select: false,
+    minlength: 8,
   },
 });
 
