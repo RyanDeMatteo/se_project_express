@@ -1,6 +1,6 @@
-const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const User = require("../models/user");
 const { JWT_SECRET } = require("../utils/config");
 const { handleOnFailError, handleError } = require("../utils/errors");
 
@@ -25,7 +25,7 @@ const createUser = (req, res) => {
             email: item.email,
           })
         )
-        .catch((err) => {
+        .catch(() => {
           handleError(err, res);
         });
     });

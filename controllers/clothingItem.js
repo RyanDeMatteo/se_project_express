@@ -15,7 +15,6 @@ const createClothingItem = (req, res) => {
   })
     .then((item) => res.status(200).send({ data: item }))
     .catch((err) => {
-      console.log(err.message);
       handleError(err, res);
     });
 };
