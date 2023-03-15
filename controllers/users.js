@@ -2,7 +2,11 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const { JWT_SECRET } = require("../utils/config");
-const { handleOnFailError, handleError } = require("../utils/errors");
+const {
+  handleOnFailError,
+  handleError,
+  ERROR_CODES,
+} = require("../utils/errors");
 
 const createUser = (req, res) => {
   const { name, avatar, email, password } = req.body;
@@ -40,16 +44,20 @@ const createUser = (req, res) => {
     });
 }; */
 
-const getCurrentUser = (req, res) => {
-  const { _id } = req.params;
-
-  User.findById(_id)
-    .orFail(() => {
-      handleOnFailError();
+const getCurrentUser = async (req, res, next) => {
+  User.findById(req.user._id)
+    .then((user) => {
+      if (!user) {
+        res.status(ERROR_CODES.NotFound).send({ message: "User not found" });
+      }
+      res.status(ERROR_CODES.Ok).send(user);
     })
-    .then((data) => res.send(data))
-    .catch((err) => {
-      handleError(err, res);
+    .catch((error) => {
+      if (error.name === "CastError") {
+        res.status(ERROR_CODES.NotFound).send({ message: "User not found" });
+      } else {
+        next(error);
+      }
     });
 };
 
