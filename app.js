@@ -28,7 +28,7 @@ app.use("/users", users);
   next();
 }); */
 
-app.use(routes);
+/* app.use(routes); */
 
 app.listen(PORT, () => {
   console.log(`App is listening at port ${PORT}`);
