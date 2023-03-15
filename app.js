@@ -1,5 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const clothingItems = require("./routes/clothingItem");
+const users = require("./routes/user");
 
 const { PORT = 3001 } = process.env;
 const app = express();
@@ -10,12 +12,17 @@ const routes = require("./routes");
 
 app.use(express.json());
 
-app.use((req, res, next) => {
+app.post("/signin", login);
+app.post("/signup", createUser);
+app.use("/items", clothingItems);
+app.use("/users", users);
+
+/* app.use((req, res, next) => {
   req.user = {
     _id: "63f575ab2fdabd491d723909",
   };
   next();
-});
+}); */
 
 app.use(routes);
 
