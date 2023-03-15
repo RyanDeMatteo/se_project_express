@@ -30,6 +30,10 @@ app.use("/users", users);
 
 /* app.use(routes); */
 
+app.use((req, res) => {
+  res.status(404).send({ message: "Requested resource not found" });
+});
+
 app.listen(PORT, () => {
   console.log(`App is listening at port ${PORT}`);
 });
