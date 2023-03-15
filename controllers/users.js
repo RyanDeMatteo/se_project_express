@@ -44,7 +44,9 @@ const getCurrentUser = (req, res) => {
   const { _id } = req.params;
 
   User.findById(_id)
-    .orFail(handleOnFailError)
+    .orFail(() => {
+      handleOnFailError();
+    })
     .then((data) => res.send(data))
     .catch((err) => {
       handleError(err, res);
