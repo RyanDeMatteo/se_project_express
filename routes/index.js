@@ -1,4 +1,4 @@
-const router = require("express").Router();
+/* const router = require("express").Router();
 const clothingItem = require("./clothingItem");
 const user = require("./user");
 const { ERROR_CODES } = require("../utils/errors");
@@ -11,3 +11,4 @@ router.use((req, res) => {
 });
 
 module.exports = router;
+*/
