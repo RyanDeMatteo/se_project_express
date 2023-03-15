@@ -69,7 +69,7 @@ const updateUser = (req, res) => {
 const login = (req, res) => {
   const { email, password } = req.body;
 
-  return User.findUserByCredentials(email, password)
+  User.findUserByCredentials(email, password)
     .then((user) => {
       res.send({
         token: jwt.sign({ _id: user._id }, JWT_SECRET, {
